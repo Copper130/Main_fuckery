@@ -300,7 +300,7 @@ int main(int argc, char* argv[]) {
 	double Kilometers = 0;// the distance that will be returned
 	std::string confirm;
 	//loop asking the user to enter and confirm the distance until they say yes
-	while (First_letter(confirm, "y") || First_letter(confirm, "Y") || confirm != "1") {
+	while (First_letter(confirm, "y") && First_letter(confirm, "Y") || confirm != "1") {
 		std::cout << "Please enter your distance in Miles:";
 		std::cin >> Miles;
 		std::cout << "is " << Miles << " the correct distance?(yes/no)\n";
