@@ -26,7 +26,7 @@ std::map<std::string, double> planetDistances = {
 
 
 
-int main(int argc, char* argv[]) {
+int main() {
 	srand(time(NULL));
 	int ran = rand() % 10;
 	int tries = 200;
@@ -47,6 +47,24 @@ int main(int argc, char* argv[]) {
 	std::string HS;//hit or stand
 	std::cout << "cheeeezee\n";
 	system("cls");
+
+	//random word gen 
+	std::cout << "How many words would you like to generate?\n";
+	std::cin >> tries;
+	for (int i = tries; i > 0; i--) {
+		std::cout << Common_words[rand() % Common_words.size()] << "\n";
+	}
+	if (tries != 1) {
+		std::cout << "Here are " << tries << " random words\n";
+	}
+	else { std::cout << "Here is one random word\n"; }
+	tries = 200;
+	std::cout << "Enter 1 to clear the screen or 2 to end the program...\n";
+	std::cin >> check; // Wait for user input
+	if (check == 1) { system("CLS"); }  // Clear the screen
+	if (check == 2) { return 0; }//returns zero
+
+
 
 	//user ask math code
 	std::cout << "Hello User\n";
@@ -135,16 +153,7 @@ int main(int argc, char* argv[]) {
 		}
 		std::cout << ".\n";
 	}
-	std::cout << "Again?(y/n)\n";//ask if the user wants to restart the code
-	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-	std::cin.clear();
-	std::getline(std::cin, HS);//reuse already made Variable
-	if (First_letter(HS, "y") || First_letter(HS, "Y")) {
-		system("cls");//clear screen
-		std::string command = std::string(argv[0]); // Get the current executable path
-		system(command.c_str()); // Restart the executable
 
-	}
 	std::cout << "Enter 1 to clear the screen or 2 to end the program...\n";
 	std::cin >> check; // Wait for user input
 	if (check == 1) { system("CLS"); }  // Clear the screen
@@ -275,11 +284,11 @@ int main(int argc, char* argv[]) {
 			std::cout << card1 << "  " << card2 << "  " << card3 << "  " << card4 << "\n";
 		}
 		else {
-			if ((card1 + card2 + card3 + card4) > (dealer + dealer2 + dealer3 +dealer4) && (card1 + card2 + card3 + card4) < 22) {
+			if ((card1 + card2 + card3 + card4) > (dealer + dealer2 + dealer3 + dealer4) && (card1 + card2 + card3 + card4) < 22) {
 				std::cout << "You win!\n";
 				std::cout << card1 << "  " << card2 << "  " << card3 << "  " << card4 << "\n";
 			}
-			else if((card1+card2+card3+card4) == (dealer + dealer2 +dealer3+dealer4) && (card1 + card2 + card3 + card4) < 22){
+			else if ((card1 + card2 + card3 + card4) == (dealer + dealer2 + dealer3 + dealer4) && (card1 + card2 + card3 + card4) < 22) {
 				std::cout << "its a tie! nobody wins\n";
 				std::cout << card1 << "  " << card2 << "  " << card3 << "  " << card4 << "\n";
 			}
@@ -289,9 +298,10 @@ int main(int argc, char* argv[]) {
 			}
 		}
 	}
+
 	std::cout << "Enter 1 to clear the screen or 2 to end the program...\n";
 	std::cin >> check; // Wait for user input
-	if (check == 1) { system("CLS"); }  // Clear the screen
+	if (check == 1) { system("CLS"); }  // Clear the screen when user wants
 	if (check == 2) { return 0; }//returns zero
 
 
@@ -300,7 +310,7 @@ int main(int argc, char* argv[]) {
 	double Kilometers = 0;// the distance that will be returned
 	std::string confirm;
 	//loop asking the user to enter and confirm the distance until they say yes
-	while (First_letter(confirm, "y") || First_letter(confirm, "Y") || confirm != "1") {
+	while (!First_letter(confirm, "y") && !First_letter(confirm, "Y") && confirm != "1") {
 		std::cout << "Please enter your distance in Miles:";
 		std::cin >> Miles;
 		std::cout << "is " << Miles << " the correct distance?(yes/no)\n";
