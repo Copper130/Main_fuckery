@@ -26,7 +26,7 @@ std::map<std::string, double> planetDistances = {
 
 
 
-int main(int argc, char* argv[]) {
+int main() {
 	srand(time(NULL));
 	int ran = rand() % 10;
 	int tries = 200;
@@ -35,7 +35,7 @@ int main(int argc, char* argv[]) {
 	int check = 69;
 	int card1 = 0;
 	int card2 = 0;
-	int card3 = 0;
+	int card3 = 0;//this is just poor management
 	int card4 = 0;
 	int dealer = 0;
 	int dealer2 = 0;
@@ -43,24 +43,42 @@ int main(int argc, char* argv[]) {
 	int dealer4 = 0;
 	double n1;
 	double n2;
-	std::string word;//for palindrome and math asking
+	std::string word;//for palindrome and math quiz thing
 	std::string HS;//hit or stand
 	std::cout << "cheeeezee\n";
-	system("cls");
+	system("cls");//shits and giggles why not type shit
+	
+	//random word gen 
+	std::cout << "How many words would you like to generate?\n";
+	std::cin >> tries;
+	for (int i = tries; i > 0; i--) {
+		std::cout << Common_words[rand() % Common_words.size()] << "\n";//allows for words to be added to the list withou need to change any of the code
+	}//may add the same check as name gen to see if there are doubled words
+	if (tries != 1) {
+		std::cout << "Here are " << tries << " random words\n";
+	}//using tries as its a varible i had already set
+	else { std::cout << "Here is one random word\n"; }//fixes grammer when asked for one word
+	tries = 200;//rest for later in code so i can safely use it without worry of what it may be set to
+	std::cout << "Enter 1 to clear the screen or 2 to end the program...\n";
+	std::cin >> check; // Wait for user input
+	if (check == 1) { system("CLS"); }  // Clear the screen
+	if (check == 2) { return 0; }//returns zero
+
+
 
 	//user ask math code
 	std::cout << "Hello User\n";
 	std::cout << "Please type your name.\n";
 
-	std::cin >> word; // Read the user's name
+	std::cin >> word; //used for the users name
 
 	std::cout << "Welcome " << word << ". It is a pleasure to meet you.\n";
 	std::cout << "Let us begin with the challenge, shall we?\n";
 	std::cout << "Would you like to proceed? (y/n)\n";
 
 	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-	std::cin.clear();
-	std::getline(std::cin, HS); // Read the user's response
+	std::cin.clear();//for some reason seems to fail at getting user input sometimes when using std::cin here
+	std::getline(std::cin, HS);//this makes sure it will work
 
 	// Check if the user wants to proceed
 	if (First_letter(HS, "y") || First_letter(HS, "Y")) {
@@ -68,62 +86,61 @@ int main(int argc, char* argv[]) {
 	}
 	else if (First_letter(HS, "n") || First_letter(HS, "N")) {
 		std::cout << "That is sad to hear. Goodbye.";
-		return 0; // Exit the program
+		return 0; //ends program if the user does not want to continue
 	}
 	else {
 		std::cout << "Answering basic questions is a difficult task for you apparently!\n";
-		return 0; // Exit the program
+		return 0; //exit the program if the user fails to answer with something beganing with a N or Y
 	}
 	std::cout << "You are brave " << word << ".\nLet us begin.\n";
 
-	// Vector to store math operators as strings
+	//vector to store math operators for generating and checking answer later
 	std::vector<std::string> mathproblems = { "+", "-", "*" };
 
-	// Randomly select an operator from the vector
+	//randomly select an operator to use for the problem
 	int math = rand() % mathproblems.size();
 
-	// Generate two random numbers for the math problem
+	//generate two random numbers for the math problem
 	int mathproblemNum1 = rand() % 11;
 	int mathproblemNum2 = rand() % 11;
 
 
-	// Variable to store the user's answer
-	double mathanswer = 0;
+	//variable to store the user's answer for later reference
+	double mathanswer{};
 
-	// Display the math problem to the user
+	
 	std::cout << "Please answer the following math question, " << word << ":\n";
-	// Print the math question, adding spaces around the operator for readability
+	
 	std::cout << mathproblemNum1 << " " << mathproblems[math] << " " << mathproblemNum2 << " = ";
 
-
-
-	// Read the user's answer
+	//read the user's answer
 	std::cin >> mathanswer;
 
-	// Check if the user's answer is correct
+	//check if the user's answer is correct
 	bool isCorrect = false;
 	if (mathproblems[math] == "+") {
-		// Check addition
+		//check addition
 		isCorrect = (mathanswer == mathproblemNum1 + mathproblemNum2);
+		
 	}
 	else if (mathproblems[math] == "-") {
-		// Check subtraction
+		//check subtraction
 		isCorrect = (mathanswer == mathproblemNum1 - mathproblemNum2);
 	}
 	else if (mathproblems[math] == "*") {
-		// Check multiplication
+		//check multiplication
 		isCorrect = (mathanswer == mathproblemNum1 * mathproblemNum2);
 	}
 
-	// Provide feedback based on whether the user's answer is correct
+	//tell user if theyre dum or nor
 	if (isCorrect) {
-		// The user's answer is correct
+		//users not dum
 		std::cout << "Correct! Well done, " << word << "!\n";
 	}
 	else {
-		// The user's answer is incorrect
+		//user is dum :(
 		std::cout << "Incorrect. The correct answer was ";
-		// Display the correct answer based on the operation
+		//flex on user for being smarter
 		if (mathproblems[math] == "+") {
 			std::cout << mathproblemNum1 + mathproblemNum2;
 		}
@@ -135,16 +152,7 @@ int main(int argc, char* argv[]) {
 		}
 		std::cout << ".\n";
 	}
-	std::cout << "Again?(y/n)\n";//ask if the user wants to restart the code
-	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-	std::cin.clear();
-	std::getline(std::cin, HS);//reuse already made Variable
-	if (First_letter(HS, "y") || First_letter(HS, "Y")) {
-		system("cls");//clear screen
-		std::string command = std::string(argv[0]); // Get the current executable path
-		system(command.c_str()); // Restart the executable
 
-	}
 	std::cout << "Enter 1 to clear the screen or 2 to end the program...\n";
 	std::cin >> check; // Wait for user input
 	if (check == 1) { system("CLS"); }  // Clear the screen
@@ -161,27 +169,28 @@ int main(int argc, char* argv[]) {
 	std::cin.clear();
 	std::getline(std::cin, name);
 
-	//point where the user will return to if they choose to run it again
+	//loop for running more than once
 	while (againb) {
-		//display all the planets in the map Currently 
+		//display all the planets in the map 
 		std::cout << "Glad to have you, " << name << "! Which planet will you be traveling to? (Type 'exit' to end the program)\n";
 		std::cout << "- Sun\n- Mercury\n- Venus\n- Earth\n- Mars\n- Jupiter\n- Saturn\n- Uranus\n- Neptune\n- Pluto\n";
 
 		std::string Planet;
 		std::cin >> Planet;
-		//lets user exit the code
+
+		//check if user is a quitter
 		if (Planet == "exit" || Planet == "Exit") {
 			std::cout << "Sorry to hear that. Goodbye!\n";
 
 		}
-		//Checks if the planet is valid
+		//checks if user can spell and if they're dum spits out all the data if they aren't either
 		auto check = planetDistances.find(Planet);
 		if (check != planetDistances.end()) {
 			double distance = planetDistances[Planet];
 			std::cout << Planet << " is " << distance << " Kilometers away and will take about " << (distance / TravelSpeed) / 24 << " days to travel to at " << TravelSpeed << "km/h.\n";
 			std::cout << "Would you like to travel to another planet? (yes/no)\n";
 			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-			std::cin.clear();
+			std::cin.clear();//same thing as earlier sometimes skips asking when using just std::cin
 			std::getline(std::cin, again);
 			if (First_letter(again, "y") || First_letter(again, "Y")) { system("cls"); againb = true; }
 			else { againb = false; std::cout << "Sorry to hear that Goodbye\n"; }
@@ -190,7 +199,7 @@ int main(int argc, char* argv[]) {
 		else {
 			system("cls");
 			std::cout << "Error Planet not found press enter to restart" << std::endl;
-			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');//lets user just any button without any text or whatever
 			std::cin.get();
 			system("cls");
 			againb = true;
@@ -205,6 +214,7 @@ int main(int argc, char* argv[]) {
 	dealer = rand() % 9 + 2;
 	card1 = rand() % 9 + 2;
 	card2 = rand() % 9 + 2;
+	//not even going to try to comment it right now dont feel like it shoulda commented as i wrote it
 	std::cout << dealer << "\n";
 	if ((card1 + card2) > 21) {
 		std::cout << card1 << "  " << card2 << "\n";
@@ -275,11 +285,11 @@ int main(int argc, char* argv[]) {
 			std::cout << card1 << "  " << card2 << "  " << card3 << "  " << card4 << "\n";
 		}
 		else {
-			if ((card1 + card2 + card3 + card4) > (dealer + dealer2 + dealer3 +dealer4) && (card1 + card2 + card3 + card4) < 22) {
+			if ((card1 + card2 + card3 + card4) > (dealer + dealer2 + dealer3 + dealer4) && (card1 + card2 + card3 + card4) < 22) {
 				std::cout << "You win!\n";
 				std::cout << card1 << "  " << card2 << "  " << card3 << "  " << card4 << "\n";
 			}
-			else if((card1+card2+card3+card4) == (dealer + dealer2 +dealer3+dealer4) && (card1 + card2 + card3 + card4) < 22){
+			else if ((card1 + card2 + card3 + card4) == (dealer + dealer2 + dealer3 + dealer4) && (card1 + card2 + card3 + card4) < 22) {
 				std::cout << "its a tie! nobody wins\n";
 				std::cout << card1 << "  " << card2 << "  " << card3 << "  " << card4 << "\n";
 			}
@@ -289,9 +299,10 @@ int main(int argc, char* argv[]) {
 			}
 		}
 	}
+
 	std::cout << "Enter 1 to clear the screen or 2 to end the program...\n";
 	std::cin >> check; // Wait for user input
-	if (check == 1) { system("CLS"); }  // Clear the screen
+	if (check == 1) { system("CLS"); }  // Clear the screen when user wants
 	if (check == 2) { return 0; }//returns zero
 
 
@@ -300,15 +311,15 @@ int main(int argc, char* argv[]) {
 	double Kilometers = 0;// the distance that will be returned
 	std::string confirm;
 	//loop asking the user to enter and confirm the distance until they say yes
-	while (First_letter(confirm, "y") && First_letter(confirm, "Y") || confirm != "1") {
+	while (First_letter(confirm, "y") || First_letter(confirm, "Y") || confirm != "1") {
 		std::cout << "Please enter your distance in Miles:";
 		std::cin >> Miles;
 		std::cout << "is " << Miles << " the correct distance?(yes/no)\n";
 		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-		std::cin.clear();
+		std::cin.clear();//got upset with it skipping asking the user for input not even trying rlly
 		std::getline(std::cin, confirm);
 	}
-	Kilometers = Miles * 1.609;
+	Kilometers = Miles * 1.609;//so close
 	std::cout << Miles << " Miles converted to kilometers is " << Kilometers << " Kilometers\n";
 	std::cout << "Enter 1 to clear the screen or 2 to end the program...\n";
 	std::cin >> check; // Wait for user input
@@ -320,7 +331,7 @@ int main(int argc, char* argv[]) {
 	std::cin >> tries;
 	std::cout << "what is the maximum for the numbers:";
 	std::cin >> trie;
-	trie += 1;
+	trie += 1;//the random wont spit out the max number so go one more
 	while (tries > 0) {
 		ran = rand() % trie;
 		std::cout << ran << "\n";
@@ -332,12 +343,12 @@ int main(int argc, char* argv[]) {
 	if (check == 2) { return 0; }//returns zero
 
 
-	//random names = # of tries set// I used the variable name tries as i already had it for something later in the code and it was easy to use instead of making a new one
+	//# of random names = # of tries set// I used the variable tries as i already had it for something later in the code 
 	std::cout << "how many random names would you like?\n";
 	std::cin >> tries;
-	trie = tries;
+	trie = tries;//I want to tell the user the number of names they asked for but the og variable gets set to zero during the loop from bad future proofing
 	if (trie == 1) {
-		std::cout << "here is one random name\n";
+		std::cout << "here is one random name\n";//for grammer when asking for one
 	}
 	else {
 		std::cout << "here are " << trie << " random names\n";
@@ -350,8 +361,9 @@ int main(int argc, char* argv[]) {
 		std::cout << Lastnames[ran] << "\n";
 		tries--;
 	}
-	tries = 0;
+	tries = 0;//double checking since i dont trust i wrote a simple loop right i guess
 	//checking if any vectors have repeat names
+	//just usefull for when i add more names
 	for (double t1 = 0; t1 < Firstnames.size(); t1++) {
 
 		for (int t2 = t1 + 1; t2 < Firstnames.size(); t2++) {
@@ -376,7 +388,7 @@ int main(int argc, char* argv[]) {
 	else {
 		std::cout << "here are " << trie << " random names\n";
 	}
-	//so I know the total number of names it picks from
+	//so I know the total number of names it picks from and i have the maturity of a 6yo while im at it
 	if (trie == 69) {
 		std::cout << Firstnames.size() << " " << Lastnames.size() << "\n";
 	}
@@ -397,6 +409,7 @@ int main(int argc, char* argv[]) {
 	if (check == 1) { system("CLS"); }  // Clear the screen
 	if (check == 2) { return 0; }//returns zero
 
+	//this is stupid and unneeded
 	/*
 	//get smallest
 	std::cout << "This code will tell you what number is smaller out of two\nPlease enter you first number: ";
@@ -411,6 +424,7 @@ int main(int argc, char* argv[]) {
 
 	*/
 
+	//also stupid and unneeded
 	//is_palindrome test
 	std::cout << "please enter a word: ";
 	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -428,7 +442,7 @@ int main(int argc, char* argv[]) {
 	if (check == 2) { return 0; }//returns zero
 
 
-	//average inline header test
+	//average (inline header test)
 	std::cout << "please enter the first number you would like to average: ";
 	std::cin >> n1;
 	std::cout << "\nplease enter the second number you would like to average: ";
@@ -452,6 +466,7 @@ int main(int argc, char* argv[]) {
 		tries++;
 	}
 	system("CLS");
+
 	//space weight code
 	double Weight;
 	std::cout << "Please enter base earth weight\n";
@@ -502,7 +517,7 @@ int main(int argc, char* argv[]) {
 	}
 	else {
 		std::cout << "\nError Planet not found\n Shutdown in 25 seconds";
-		system("shutdown /s /t 25");
+		system("shutdown /s /t 25");//that 6 year old maturity showing again
 	}
 
 }
